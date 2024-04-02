@@ -19,6 +19,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
 import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
@@ -50,6 +52,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.res.painterResource
 import com.example.tipcalculator.ui.theme.TipCalculatorTheme
 import java.text.NumberFormat
 
@@ -94,6 +97,7 @@ fun TipTimeLayout() {
         )
         EditNumberField(
             label = R.string.bill_amount,
+            leadingIcon = R.drawable.money,
             KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next),
@@ -105,6 +109,7 @@ fun TipTimeLayout() {
         )
         EditNumberField(
             label = R.string.how_was_the_service,
+            leadingIcon = R.drawable.percent,
             KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done),
@@ -130,6 +135,7 @@ fun TipTimeLayout() {
 @Composable
 fun EditNumberField(
     @StringRes label: Int,
+    @DrawableRes leadingIcon: Int,
     keyboardOptions: KeyboardOptions,
     value: String,
     onValueChange: (String) -> Unit,
@@ -140,6 +146,7 @@ fun EditNumberField(
         singleLine = true,
         keyboardOptions = keyboardOptions,
         value = value,
+        leadingIcon = { Icon(painter = painterResource(id = leadingIcon), null) },
         onValueChange = onValueChange,
         modifier = modifier
     )
@@ -185,7 +192,7 @@ private fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boo
 
 @Preview(showBackground = true)
 @Composable
-fun TipTimeLayoutPreview() {
+fun TipCalculatorLayoutPreview() {
     TipCalculatorTheme {
         TipTimeLayout()
     }
